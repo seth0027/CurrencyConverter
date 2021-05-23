@@ -1,24 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import "./App.css";
+
+import { notification, Layout } from "antd";
+import { SmileOutlined } from "@ant-design/icons";
+
+import { Content, Footer, Header } from "antd/lib/layout/layout";
+import { AppContent } from "./components/AppContent";
+import { AppHeader } from "./components/AppHeader";
+import { AppFooter } from "./components/AppFooter";
 
 function App() {
+  const openNotification = () => {
+    notification.open({
+      message: "Thank you for visiting",
+      description:
+        "This is a currency converter app. This app also lists the countries where specified currencies are used",
+      icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+    });
+  };
+
+  React.useEffect(() => {
+    const value = localStorage.getItem("show");
+    if (!value) {
+      openNotification();
+      localStorage.setItem("show", "shown");
+    }
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout>
+        <Header>
+          <AppHeader openNotification={openNotification} />
+        </Header>
+        <Content>
+          <AppContent />
+        </Content>
+        <Footer>
+          <AppFooter />
+        </Footer>
+      </Layout>
     </div>
   );
 }
