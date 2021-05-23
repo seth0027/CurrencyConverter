@@ -1,6 +1,7 @@
 import { Select } from "antd";
 import React from "react";
-import { getCurrencies } from "../data/getCurrencies";
+
+import { useCurrencyDropDown } from "../hooks/useCurrencyDropDown";
 import { CountryCurrency } from "../models/Country";
 
 const DEFAULT_CODE = "CAD";
@@ -13,16 +14,7 @@ export const CurrenciesDropDown = ({
   setCurrency(currency: CountryCurrency): void;
   isBase: boolean;
 }) => {
-  const [currencies, setCurrencies] = React.useState<CountryCurrency[]>([]);
-
-  const fetchCurrencies = async () => {
-    const data = await getCurrencies();
-    setCurrencies(data);
-  };
-
-  React.useEffect(() => {
-    fetchCurrencies();
-  }, []);
+  const currencies = useCurrencyDropDown();
 
   const localStorageKey = isBase ? "baseCurrency" : "targetCurrency";
   const mapCurrencies = currencies.map((currency) => (

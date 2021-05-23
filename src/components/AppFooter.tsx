@@ -13,10 +13,10 @@ export const AppFooter = () => {
           Apis used:
           <ul>
             {apis.map((api) => (
-              <>
+              <div key={api}>
                 <a href={api}>{api}</a>
                 <br />
-              </>
+              </div>
             ))}
           </ul>
         </Row>
